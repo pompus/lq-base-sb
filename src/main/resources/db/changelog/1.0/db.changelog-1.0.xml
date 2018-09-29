@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- https://www.baeldung.com/liquibase-refactor-schema-of-java-app
+https://github.com/Inkimar/liquibase-example
+http://www.liquibase.org/documentation/rollback.html
+http://www.liquibase.org/documentation/changeset.html -->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+	<changeSet id="createTable user_profile" author="ssaha">
+		<createTable tableName="user_profile">
+			<column name="userid" type="varchar(50)" autoIncrement="false">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="profile" type="varchar(50)">
+				<constraints nullable="false" />
+			</column>
+		</createTable>
+	</changeSet>
+
+	<changeSet id="createTable profile_details" author="ssaha">
+		<createTable tableName="profile_details">
+			<column name="role_id" type="BIGINT" autoIncrement="false">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="profile" type="varchar(50)" />
+		</createTable>
+		<addForeignKeyConstraint constraintName="FK_profile"
+			baseTableName="profile_details" baseColumnNames="profile"
+			referencedTableName="user_profile" referencedColumnNames="profile" />
+	</changeSet>
+
+	<changeSet id="addColumn role_name profile_details" author="ssaha">
+		<addColumn tableName="profile_details">
+			<column name="role_name" type="varchar(50)" />
+		</addColumn>
+		<addNotNullConstraint tableName="profile_details"
+			columnName="profile" columnDataType="varchar(50)"/>
+		<rollback changeSetId="createTable profile_details"
+			changeSetAuthor="ssaha" />
+	</changeSet>
+
+	<changeSet id="createTable Test" author="ssaha">
+		<createTable tableName="TEST">
+			<column name="UUID" type="varchar(255)" autoIncrement="false">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="Test" type="varchar(50)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="createTable CSV_DATA" author="ssaha">
+		<createTable tableName="CSV_DATA">
+			<column name="UUID" type="BIGINT" autoIncrement="false">
+				<constraints primaryKey="true" nullable="false" />
+			</column>
+			<column name="SOURCE" type="varchar(50)" />
+		</createTable>
+	</changeSet>
+
+	<changeSet id="loadData CSV_DATA" author="ssaha">
+		<loadData relativeToChangelogFile="true" tableName="CSV_DATA" file="CSV_DATA.csv" />
+	</changeSet>
+
+	<changeSet id="sql1 CSV_DATA" author="ssaha">
+		<sql dbms="h2" endDelimiter="/nGO" splitStatements="true"
+			stripComments="true">
+			insert into CSV_DATA(UUID,SOURCE) values (6,'Paid For Order 6')
+			<!-- GO
+			insert into CSV_DATA(UUID,SOURCE) values (7,'Paid For Order 7')
+			GO -->
+			<comment>Example to show the use of raw sql</comment>
+		</sql>
+	</changeSet>
+
+	<changeSet author="ssaha " id="createView-example">
+		<createView viewName="testHello">SELECT * FROM CSV_DATA;
+		</createView>
+	</changeSet>
+	<changeSet id="tag-1.0" author="ssaha">
+    <tagDatabase tag="1.0" />
+  </changeSet>
+</databaseChangeLog>

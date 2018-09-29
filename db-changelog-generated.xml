@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd"/>
+    <changeSet author="HP PC (generated)" id="1538247837086-1">
+        <createTable tableName="CSV_DATA">
+            <column name="UUID" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="SOURCE" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-2">
+        <createTable tableName="PROFILE_DETAILS">
+            <column name="ROLE_ID" type="BIGINT(19)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PROFILE" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="ROLE_NAME" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-3">
+        <createTable tableName="TEST">
+            <column name="UUID" type="VARCHAR(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="TEST" type="VARCHAR(50)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-4">
+        <createTable tableName="USER_PROFILE">
+            <column name="USERID" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="PROFILE" type="VARCHAR(50)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-5">
+        <addPrimaryKey columnNames="UUID" constraintName="PK_CSV_DATA" tableName="CSV_DATA"/>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-6">
+        <addPrimaryKey columnNames="ROLE_ID" constraintName="PK_PROFILE_DETAILS" tableName="PROFILE_DETAILS"/>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-7">
+        <addPrimaryKey columnNames="UUID" constraintName="PK_TEST" tableName="TEST"/>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-8">
+        <addPrimaryKey columnNames="USERID" constraintName="PK_USER_PROFILE" tableName="USER_PROFILE"/>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-9">
+        <createIndex indexName="FK_PROFILE_INDEX_C" tableName="USER_PROFILE" unique="true">
+            <column name="PROFILE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-10">
+        <createIndex indexName="FK_PROFILE_INDEX_F" tableName="PROFILE_DETAILS">
+            <column name="PROFILE"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-11">
+        <addForeignKeyConstraint baseColumnNames="PROFILE" baseTableName="PROFILE_DETAILS" constraintName="FK_PROFILE" deferrable="false" initiallyDeferred="false" onDelete="RESTRICT" onUpdate="RESTRICT" referencedColumnNames="PROFILE" referencedTableName="USER_PROFILE"/>
+    </changeSet>
+    <changeSet author="HP PC (generated)" id="1538247837086-12">
+        <createView fullDefinition="false" viewName="TESTHELLO">SELECT
+    CSV_DATA.UUID,
+    CSV_DATA.SOURCE
+FROM PUBLIC.CSV_DATA</createView>
+    </changeSet>
+</databaseChangeLog>

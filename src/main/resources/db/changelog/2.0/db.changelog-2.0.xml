@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- http://www.liquibase.org/documentation/changes/index.html 
+http://www.liquibase.org/documentation/sql_format.html-->
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+
+	<changeSet id="sqlFile ddl 2.0" author="ssaha">
+		<sqlFile dbms="h2, oracle" path="sql/ddl.sql"
+			relativeToChangelogFile="true" splitStatements="true" stripComments="true" />
+	</changeSet>
+	<changeSet id="sqlFile dml 2.0" author="ssaha">
+		<sqlFile dbms="h2, oracle" path="sql/dml.sql"
+			relativeToChangelogFile="true" splitStatements="true" stripComments="true" />
+	</changeSet>
+	
+	<changeSet id="tag-2.0" author="ssaha">
+    <tagDatabase tag="2.0" />
+  </changeSet>
+</databaseChangeLog>
